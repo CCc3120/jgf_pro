@@ -25,10 +25,10 @@ public class HttpUtil {
 
 	private static final String PARAM_NAME = "param";
 
-	// 连接超时时间
+	// 连接超时时间 ms
 	private static final int CONNECT_TIME_OUT = 3000;
 
-	// 读取超时时间
+	// 读取超时时间 ms
 	private static final int READ_TIME_OUT = 10000;
 
 	public static String doPostAndFile1(String URL, String body, File file) {

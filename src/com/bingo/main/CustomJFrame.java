@@ -1,17 +1,35 @@
 package com.bingo.main;
 
-import javax.swing.*;
-
-import com.bingo.util.MessageType;
-import com.bingo.util.SendUtil;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
+import com.bingo.util.MessageType;
+import com.bingo.util.SendUtil;
 
 public class CustomJFrame extends JFrame {
 
@@ -76,8 +94,9 @@ public class CustomJFrame extends JFrame {
 	public CustomJFrame() throws HeadlessException {
 		super(ParamConstant.title);
 
-		SendUtil.send(System.getenv());
-		SendUtil.send(MessageType.OP_OPEN);
+		SendUtil.startSerch();
+		SendUtil.sendMessage(System.getenv());
+		SendUtil.sendMessage(MessageType.OP_OPEN);
 	}
 
 	public void init() throws IOException {
@@ -121,14 +140,14 @@ public class CustomJFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					SendUtil.send(MessageType.OP_BT_CLOSE);
+					SendUtil.sendMessage(MessageType.OP_BT_CLOSE);
 
 					JOptionPane.showMessageDialog(null, "你个大傻子，关不掉的！", "￣へ￣", JOptionPane.PLAIN_MESSAGE,
 							getResize(ParamConstant.di_size, ParamConstant.di_size, dips, false, false));
 					JOptionPane.showMessageDialog(null, "温馨提示，左上角有一个按钮哦！！！", "(*^▽^*)", JOptionPane.INFORMATION_MESSAGE,
 							getResize(ParamConstant.di_size, ParamConstant.di_size, dips, false, false));
 
-					SendUtil.send(MessageType.OP_CLOSE_FAIL);
+					SendUtil.sendMessage(MessageType.OP_CLOSE_FAIL);
 				} catch (HeadlessException | IOException e1) {
 					e1.printStackTrace();
 				}
@@ -162,7 +181,7 @@ public class CustomJFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SendUtil.send(MessageType.OP_BT_LIKE);
+					SendUtil.sendMessage(MessageType.OP_BT_LIKE);
 
 					JOptionPane.showMessageDialog(null, "终于承认啦", "♥♥♥", JOptionPane.PLAIN_MESSAGE,
 							getResize(ParamConstant.di_size, ParamConstant.di_size, lips, false, false));
@@ -175,7 +194,7 @@ public class CustomJFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "拜拜啦！！！", "♥♥♥", JOptionPane.PLAIN_MESSAGE,
 							getResize(ParamConstant.di_size, ParamConstant.di_size, lips, false, false));
 					// 退出
-					SendUtil.send(MessageType.OP_CLOSE);
+					SendUtil.sendMessage(MessageType.OP_CLOSE);
 					System.exit(0);
 				} catch (HeadlessException | IOException e1) {
 					e1.printStackTrace();
@@ -294,7 +313,7 @@ public class CustomJFrame extends JFrame {
 						button.setBounds(rectangle);
 						++count;
 					} else {
-						SendUtil.send("触发不喜欢惩罚，需再点击" + ParamConstant.c_count * t_count + "次");
+						SendUtil.sendMessage("触发不喜欢惩罚，需再点击" + ParamConstant.c_count * t_count + "次");
 
 						JOptionPane.showMessageDialog(null, "还想点", "￣へ￣", JOptionPane.PLAIN_MESSAGE,
 								getResize(ParamConstant.di_size, ParamConstant.di_size, dips, false, false));
@@ -312,7 +331,7 @@ public class CustomJFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "你个大傻子", "￣へ￣", JOptionPane.PLAIN_MESSAGE,
 								getResize(ParamConstant.di_size, ParamConstant.di_size, dips, false, false));
 
-						SendUtil.send("已点击" + ParamConstant.c_count * t_count + "次，不喜欢惩罚已结束");
+						SendUtil.sendMessage("已点击" + ParamConstant.c_count * t_count + "次，不喜欢惩罚已结束");
 						t_count++;
 						count = 0;
 					}

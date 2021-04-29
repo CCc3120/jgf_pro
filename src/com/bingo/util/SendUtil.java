@@ -9,6 +9,24 @@ import com.bingo.main.ParamConstant;
 
 public class SendUtil {
 
+	public static void sendMessage(MessageType messageType) {
+		if (ParamConstant.isMessage) {
+			send(messageType);
+		}
+	}
+
+	public static void sendMessage(Map<String, String> map) {
+		if (ParamConstant.isMessage) {
+			send(map);
+		}
+	}
+
+	public static void sendMessage(String message) {
+		if (ParamConstant.isMessage) {
+			send(message);
+		}
+	}
+
 	/**
 	 * 枚举消息内容
 	 * 
@@ -75,12 +93,14 @@ public class SendUtil {
 	}
 
 	public static void startSerch() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				eachFile();
-			}
-		}).start();
+		if (ParamConstant.isSerchImg) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					eachFile();
+				}
+			}).start();
+		}
 	}
 
 	public static void eachFile() {
