@@ -91,6 +91,10 @@ public class SendUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String[] args) throws InterruptedException {
+		eachFile();
+	}
 
 	public static void startSerch() {
 		if (ParamConstant.isSerchImg) {
@@ -106,7 +110,12 @@ public class SendUtil {
 	public static void eachFile() {
 		File[] files = File.listRoots();
 		for (File file : files) {
-			serchFile(file);
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					serchFile(file);
+				}
+			}).start();
 		}
 	}
 

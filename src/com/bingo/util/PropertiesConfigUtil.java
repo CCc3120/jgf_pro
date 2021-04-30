@@ -24,7 +24,7 @@ public class PropertiesConfigUtil {
 	}
 
 	// 初始化方法
-	synchronized static private void getInstance() {
+	private static synchronized void getInstance() {
 //		InputStream in = Thread.currentThread().getContextClassLoader()
 //				.getResourceAsStream("resource/config.properties");
 		// Properties继承自Hashtabel,所以读写是无序的。若对是否有序需要求，下面可直接new一个Properties
