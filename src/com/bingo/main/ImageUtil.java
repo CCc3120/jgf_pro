@@ -1,11 +1,75 @@
 package com.bingo.main;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class ImageUtil {
+
+	// 背景图图片数组
+	static List<String> bgps;
+	// 按钮图图片数组
+	static List<String> btps;
+	// 对话框图图片数组
+	static List<String> dips;
+	// 喜欢对话框图片数组
+	static List<String> lips;
+
+	static {
+		bgps = new ArrayList<>();
+		btps = new ArrayList<>();
+		dips = new ArrayList<>();
+		lips = new ArrayList<>();
+		File file = new File(ParamConstant.imgPath);
+		if (file.isDirectory()) {
+			initImg(file);
+		}
+	}
+
+	private static void initImg(File file) {
+		File[] files = file.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isDirectory()) {
+				initImg(files[i]);
+				continue;
+			}
+			if (files[i].getName().contains("bg")) {
+				bgps.add(files[i].getPath());
+			}
+			if (files[i].getName().contains("bt")) {
+				btps.add(files[i].getPath());
+			}
+			if (files[i].getName().contains("di")) {
+				dips.add(files[i].getPath());
+			}
+			if (files[i].getName().contains("li")) {
+				lips.add(files[i].getPath());
+			}
+		}
+	}
+	
+	public static String getAnyOneImg(List<String> list){
+		if (list == null || list.isEmpty()) {
+		 	return "";
+		}
+		return list.get(new Random().nextInt(list.size()));
+	}
+
+	public static ImageIcon getResize(int width, int height, List<String> imgs, boolean proportion,
+			boolean isBackGround) throws IOException {
+		File tem = File.createTempFile("tem", null);
+		ImageUtil.resizePng(new File(getAnyOneImg(imgs)), tem, width, height, proportion, isBackGround);
+		return new ImageIcon(tem.getCanonicalPath());
+	}
+	
+	
 	/**
 	 * 裁剪PNG图片工具类
 	 *
@@ -14,6 +78,7 @@ public class ImageUtil {
 	 * @param outputWidth  裁剪宽度
 	 * @param outputHeight 裁剪高度
 	 * @param proportion   是否是等比缩放
+	 * @param isBackGround 是否背景图
 	 */
 	public static void resizePng(File fromFile, File toFile, int outputWidth, int outputHeight, boolean proportion,
 			boolean isBackGround) {

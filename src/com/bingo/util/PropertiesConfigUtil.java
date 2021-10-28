@@ -25,8 +25,6 @@ public class PropertiesConfigUtil {
 
 	// 初始化方法
 	private static synchronized void getInstance() {
-//		InputStream in = Thread.currentThread().getContextClassLoader()
-//				.getResourceAsStream("resource/config.properties");
 		// Properties继承自Hashtabel,所以读写是无序的。若对是否有序需要求，下面可直接new一个Properties
 		FileInputStream fis = null;
 		BufferedReader bufferedReader = null;
@@ -47,7 +45,6 @@ public class PropertiesConfigUtil {
 					fis.close();
 				}
 			} catch (IOException e) {
-				bufferedReader = null;
 				e.printStackTrace();
 			}
 		}
@@ -92,7 +89,6 @@ public class PropertiesConfigUtil {
 				}
 			} catch (IOException e) {
 				// 若流关闭时出现异常则将其设为null,保证其不占用资源
-//				outputFile = null;
 				e.printStackTrace();
 			}
 		}
