@@ -23,37 +23,37 @@ public class CustomJFrame extends JFrame {
 
     public void init() throws IOException, ClassNotFoundException, UnsupportedLookAndFeelException,
             InstantiationException, IllegalAccessException {
-        
+
         // 设置当前系统默认风格
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        
+        UIManager.put("OptionPane.minimumSize", new Dimension(320, 108));
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
         // 设置左上角图标
-        Image icon = Toolkit.getDefaultToolkit().getImage(ImageUtil.getAnyOneImg(ImageUtil.btps));
+        Image icon = toolkit.getImage(ImageUtil.getAnyOneImg(ImageUtil.btps));
         this.setIconImage(icon);
+
         // 获取屏幕分辨率
-        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screensize = toolkit.getScreenSize();
         int width = (int) screensize.getWidth();
         int height = (int) screensize.getHeight();
+
         // 加载背景图片
         background = ImageUtil.getResize(width, height, ImageUtil.bgps, true, true);
         JLabel label = new JLabel(background);
         // 设置标签大小
         label.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
-        // 主界面获得容器JPanel
         this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
-        JPanel jp = (JPanel) this.getContentPane();
+
+        // 主界面获得容器JPanel
+        JPanel jpanel = (JPanel) this.getContentPane();
         // JPanel对象才可以调用setOpaque(false);设置是否透明
-        jp.setOpaque(false);
-
-        JPanel jpanel = new JPanel();
         jpanel.setOpaque(false);
-
         // 去除JPanel默认布局方式,以实现各个控件自己的定位
         jpanel.add(buildLikeButton());
         jpanel.add(buildNoLikeButton());
-
         jpanel.setLayout(null);
-        this.add(jpanel);
+        
         // 窗口大小不可变
         this.setResizable(false);
         // 设置屏幕中间显示,x/y参数无效
@@ -62,7 +62,7 @@ public class CustomJFrame extends JFrame {
         // 默认显示在屏幕中间
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new CustomWindowAdapter(this));
     }
 
@@ -101,7 +101,7 @@ public class CustomJFrame extends JFrame {
         // 按钮内文字颜色
         button.setForeground(Color.WHITE);
         // 设置初始位置
-        button.setBounds(background.getIconWidth() - 130, 0, ParamConstant.bt_width, ParamConstant.bt_htight);
+        button.setBounds(background.getIconWidth() - 136, 0, ParamConstant.bt_width, ParamConstant.bt_htight);
         // 设置控件是否透明，true为不透明，false为透明
         button.setOpaque(false);
         // 设置文字居中

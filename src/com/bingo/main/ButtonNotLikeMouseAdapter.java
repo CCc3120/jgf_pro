@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.swing.*;
 
@@ -36,6 +35,15 @@ public class ButtonNotLikeMouseAdapter extends MouseAdapter {
 
     @Override
     public void mouseEntered(MouseEvent event) {
+        butMove();
+    }
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+        butMove();
+    }
+    
+    private void butMove() {
         try {
             Rectangle rectangle = button.getBounds();
             if (count < ParamConstant.s_count * t_count) {
@@ -44,13 +52,13 @@ public class ButtonNotLikeMouseAdapter extends MouseAdapter {
                 do {
                     // 循环生成x,y坐标，不能生成在原来的范围内
                     do {
-                        // 减去按钮宽130
-                        pix = new Random().nextInt(background.getIconWidth() - 130);
+                        // 减去按钮宽136
+                        pix = ImageUtil.random.nextInt(background.getIconWidth() - 136);
                     } while (rectangle.x - ParamConstant.bt_width <= pix && rectangle.x + ParamConstant.bt_width >= pix);
 
                     do {
-                        // 右下角定位需减88
-                        piy = new Random().nextInt(background.getIconHeight() - 88);
+                        // 右下角定位需减89
+                        piy = ImageUtil.random.nextInt(background.getIconHeight() - 89);
                     } while (rectangle.y - ParamConstant.bt_htight <= piy && rectangle.y + ParamConstant.bt_htight >= piy);
 
                     // 不能与喜欢按钮重叠

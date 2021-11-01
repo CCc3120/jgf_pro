@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class ImageUtil {
+	
+	public static Random random = new Random();
 
 	// 背景图图片数组
 	static List<String> bgps;
@@ -59,7 +61,7 @@ public class ImageUtil {
 		if (list == null || list.isEmpty()) {
 		 	return "";
 		}
-		return list.get(new Random().nextInt(list.size()));
+		return list.get(random.nextInt(list.size()));
 	}
 
 	public static ImageIcon getResize(int width, int height, List<String> imgs, boolean proportion,
